@@ -9,7 +9,7 @@ class Security{
         return $sql;
      }
 
-     public function isVar($var, $op = 0){
+     public function isVar($var){
         if(!isset($var) || empty($var) || $var === null || is_null($var)){
             return false;
         }else{
