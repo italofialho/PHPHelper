@@ -4,6 +4,7 @@
 ```php
 /* Date.php */
 
+/* convertData("Data", "Contem Hora (True/False)", "Time Zone") */
 $date = new convertData("2017-09-28"); // Ou
 
 // $date = new convertData("2017-09-28", false); // Ou
