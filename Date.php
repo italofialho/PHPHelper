@@ -35,7 +35,7 @@ class convertData
             case 5:
                 $diaNome = "Sexta";
                 break;
-            case 5:
+            case 6:
                 $diaNome = "Sábado";
                 break;
             default:
