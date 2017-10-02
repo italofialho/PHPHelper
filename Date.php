@@ -85,7 +85,7 @@ class convertData
             case 11:
                 $mesNome = "Novembro";
                 break;
-			case 12:
+		    case 12:
                 $mesNome = "Dezembro";
                 break;
             default:
