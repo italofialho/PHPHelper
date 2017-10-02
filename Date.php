@@ -16,7 +16,7 @@ class convertData
 
     public function getDiaSemana(){
         $diaSemana = date("w", $this->timeStamp);   
-        switch($diaSemana){
+        switch((int)$diaSemana){
             case 0:
                 $diaNome = "Domingo";
                 break;
@@ -48,32 +48,32 @@ class convertData
 
         $mes = date("m", $this->timeStamp);
 
-        switch($mes){
-            case 01:
+        switch((int)$mes){
+            case 1:
                 $mesNome = "Janeiro";
                 break;
-            case 02:
+            case 2:
                 $mesNome = "Fevereiro";
                 break;
-            case 03:
+            case 3:
                 $mesNome = "Março";
                 break;
-            case 04:
+            case 4:
                 $mesNome = "Abril";
                 break;
-            case 05:
+            case 5:
                 $mesNome = "Maio";
                 break;
-            case 06:
+            case 6:
                 $mesNome = "Junho";
                 break;
-            case 07:
+            case 7:
                 $mesNome = "Julho";
                 break;
-            case 08:
+            case 8:
                 $mesNome = "Agosto";
                 break;
-            case 09:
+            case 9:
                 $mesNome = "Setembro";
                 break;
             case 10:
@@ -81,6 +81,9 @@ class convertData
                 break;
             case 11:
                 $mesNome = "Novembro";
+                break;
+			case 12:
+                $mesNome = "Dezembro";
                 break;
             default: 
                 $mesNome = "Dezembro";
