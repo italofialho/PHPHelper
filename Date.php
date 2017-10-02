@@ -35,8 +35,11 @@ class convertData
             case 5:
                 $diaNome = "Sexta";
                 break;
-            default:
+            case 5:
                 $diaNome = "Sábado";
+                break;
+            default:
+                return false;
                 break;
         }
         
@@ -85,8 +88,8 @@ class convertData
 			case 12:
                 $mesNome = "Dezembro";
                 break;
-            default: 
-                $mesNome = "Dezembro";
+            default:
+                return false;
                 break;
 
         }
