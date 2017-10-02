@@ -85,7 +85,7 @@ class convertData
             case 11:
                 $mesNome = "Novembro";
                 break;
-		    case 12:
+			case 12:
                 $mesNome = "Dezembro";
                 break;
             default:
@@ -116,9 +116,9 @@ class convertData
 
         date_default_timezone_set($this->timeZone);
 
-        if ($this->hours) {
+        if($this->hours){
             return $this->getDiaSemana().", ".$this->getDia()." de ".$this->getMes()." de ".$this->getAno()." - ".$this->getHora();
-        } else {
+        }else{
             return $this->getDiaSemana().", ".$this->getDia()." de ".$this->getMes()." de ".$this->getAno();
         }
     }
