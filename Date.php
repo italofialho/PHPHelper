@@ -122,5 +122,52 @@ class convertData
             return $this->getDiaSemana().", ".$this->getDia()." de ".$this->getMes()." de ".$this->getAno();
         }
     }
+	
+	/*public function getDateDiff($your_date, $hr = 0) {
+        $now = time(); // or your date as well
+        $datediff = $now - $your_date;
+        $days = floor( $datediff / ( 3600 * 24 ) );
+
+        $label = '';
+
+        if ($hr) {
+            if ($days >= 365) { // over a year
+                $years = floor($days / 365);
+                $label .= $years . ' Ano(s)';
+                $days -= 365 * $years;
+            }
+
+            if ($days) {
+                $months = floor( $days / 30 );
+                $label .= ' ' . $months . ' Mês(s)';
+                $days -= 30 * $months;
+            }
+
+            if ($days) {
+                $label .= ' ' . $days . ' dia(s)';
+            }
+        } else {
+            $label = $days;
+        }
+
+        return $label;
+    }
+	function now($str_user_timezone,
+		$str_server_timezone = CONST_SERVER_TIMEZONE,
+		$str_server_dateformat = CONST_SERVER_DATEFORMAT) {
+
+		// set timezone to user timezone
+		date_default_timezone_set($str_user_timezone);
+
+		$date = new DateTime('now');
+		$date->setTimezone(new DateTimeZone($str_server_timezone));
+		$str_server_now = $date->format($str_server_dateformat);
+
+		// return timezone to server default
+		date_default_timezone_set($str_server_timezone);
+
+		return $str_server_now;
+	}
+	*/
 }
 ?>
