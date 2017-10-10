@@ -2,16 +2,16 @@
 
 class FileTransferProtocol  
 {
-    private $host;
-    private $user;
-    private $pass;
-    private $login;
+    private $host = null;
+    private $user = null;
+    private $pass = null;
+    private $loginc = null;
     private $connection = null;
-    private $file;
-    private $localFile;
+    private $file = null;
+    private $localFile = null;
     private $result = array();
     private $canContinue = true;
-    private $debug;
+    private $debug = null;
 
     function __construct($ftp_host, $ftp_user_name, $ftp_user_pass, $debug = null){
         $this->host = $ftp_host;
@@ -23,39 +23,38 @@ class FileTransferProtocol
     public function sendFile($file, $localFile){
         $this->file = $file;
         $this->localFile = $localFile;
-
-        $this->openConnection();
-        $this->loginOnServer();
-
-        if(!$this->checkIfFileExist()){
-            if(ftp_put($this->connection, $this->file, $this->localFile, FTP_BINARY)){
-                array_push($this->result, "WOOT! Arquivo transferido com sucesso: $this->file.");
-            }else{
-                array_push($this->result, "Doh! Tivemos um problema para transferir o arquivo.");
+        
+        if($this->openConnection() && $this->loginOnServer()){
+            if($this->canContinue === true && !$this->checkIfFileExist()){
+                if(ftp_put($this->connection, $this->file, $this->localFile, FTP_BINARY)){
+                    array_push($this->result, "WOOT! Arquivo transferido com sucesso: $this->file.");
+                }else{
+                    array_push($this->result, "Doh! Tivemos um problema para transferir o arquivo.");
+                }
             }
+
+            $this->closeConnection();
         }
-
-        $this->closeConnection();
-
-        return $this->result;
     }
 
     private function openConnection(){
-		if(isset($this->host) && is_null($this->connection)){
+		if(is_null($this->connection)){
             $this->connection = ftp_connect($this->host);
             if($this->connection){
                 array_push($this->result, "WOOT! Encontramos o servidor FTP.");
+                return true;
             }else{
                 $this->canContinue = false;
                 array_push($this->result, "Doh! Não foi possivel encontrar o servidor FTP.");
+                return false;
             }
-		}
+        }
     }
 	
 	public function getResult(){
         if($this->debug == 0){
             var_dump($this->result);
-        }else if($this->debug == 0){
+        }else if($this->debug == 1){
             foreach ($this->result as $key => $value) {
                 echo("$value <br>");
             }
@@ -65,10 +64,12 @@ class FileTransferProtocol
 	}
 
     private function loginOnServer(){
-		if($this->canContinue && !is_null($this->connection) && isset($this->user) && !empty($this->user) && isset($this->pass) && !empty($this->pass) && $this->connection){
+		if($this->canContinue && (isset($this->connection)) && !is_null($this->connection) && isset($this->user) && !empty($this->user) && isset($this->pass) && !empty($this->pass)){
+            
             $this->login = ftp_login($this->connection, $this->user, $this->pass);
-            if($this->connection){
+            if($this->login){
                 array_push($this->result, "WOOT! Conectado ao servidor FTP.");
+                return true;
             }else{
                 $this->canContinue = false;
                 array_push($this->result, "Doh! Não foi possivel conectar com o servidor FTP.");
