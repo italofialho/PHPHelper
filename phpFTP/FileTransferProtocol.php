@@ -34,9 +34,9 @@ class FileTransferProtocol
         if ($this->openConnection() && $this->loginOnServer()) {
             if ($this->canContinue === true && !$this->checkIfFileExist()) {
                 if (@ftp_put($this->connection, $this->file, $this->localFile, FTP_BINARY)) {
-                    array_push($this->result, "Arquivo transferido com sucesso: " . basename($this->localFile));
+                    array_push($this->result, "File transferred successfullyo: " . basename($this->localFile));
                 } else {
-                    array_push($this->result, "Tivemos um problema para transferir o arquivo: " . basename($this->localFile));
+                    array_push($this->result, "We had a problem downloading the file: " . basename($this->localFile));
                 }
             }
             $this->totalFiles++;
@@ -48,15 +48,15 @@ class FileTransferProtocol
         if (is_null($this->connection)) {
             $this->connection = ftp_connect($this->host, $this->port);
         } else {
-            array_push($this->result, "Já estamos conectados ao servidor FTP.");
+            array_push($this->result, "We are already connected to the FTP server.");
         }
         
         if ($this->connection) {
-            array_push($this->result, "Encontramos o servidor FTP.");
+            array_push($this->result, "We found the FTP server.");
             return true;
         } else {
             $this->canContinue = false;
-            array_push($this->result, "Não foi possivel encontrar o servidor FTP.");
+            array_push($this->result, "Could not find FTP server.");
             return false;
         }
     }
@@ -69,7 +69,7 @@ class FileTransferProtocol
             foreach ($this->result as $key => $value) {
                 echo ("$value <br>");
             }
-            echo ("Total de arquivos processados: $this->totalFiles. <br>");
+            echo ("Total processed files: $this->totalFiles. <br>");
         } else {
             return $this->result;
         }
@@ -82,20 +82,20 @@ class FileTransferProtocol
             if (is_null($this->login)) {
                 $this->login = ftp_login($this->connection, $this->user, $this->pass);
             } else {
-                array_push($this->result, "Já estamos autenticado no servidor FTP.");
+                array_push($this->result, "We are already authenticated on the FTP server.");
             }
             
             if ($this->login) {
-                array_push($this->result, "Conectado ao servidor FTP.");
+                array_push($this->result, "Connected to FTP server.");
                 return true;
             } else {
                 $this->canContinue = false;
-                array_push($this->result, "Não foi possivel conectar com o servidor FTP.");
+                array_push($this->result, "Could not connect to FTP server.");
                 return false;
             }
         } else {
             $this->canContinue = false;
-            array_push($this->result, "Não foi possivel conectar com o servidor FTP. Informações incorretas.");
+            array_push($this->result, "Could not connect to FTP server. Incorrect information.");
             return false;
         }
     }
@@ -105,9 +105,9 @@ class FileTransferProtocol
         if ($this->connection) {
             ftp_close($this->connection);
             $this->reset();
-            array_push($this->result, "Conexão encerrada com o servidor FTP.");
+            array_push($this->result, "Connection terminated with FTP server.");
         } else {
-            array_push($this->result, "Conexão já foi encerrada com o servidor FTP.");
+            array_push($this->result, "Connection has already been terminated with the FTP server.");
         }
         
     }
@@ -116,10 +116,10 @@ class FileTransferProtocol
     {
         $listing = @ftp_nlist($this->connection, $this->file);
         if ($listing == false) {
-            array_push($this->result, "Não encontramos o arquivo desejado.");
+            array_push($this->result, "We did not find the file you wanted.");
             return false;
         } else {
-            array_push($this->result, "Encontramos o arquivo: " . basename($this->file));
+            array_push($this->result, "We found the file: " . basename($this->file));
             return true;
         }
     }
@@ -129,9 +129,9 @@ class FileTransferProtocol
         $buff = ftp_mdtm($this->connection, $this->file);
         
         if ($buff != -1) {
-            array_push($this->result, "" . basename($this->file) . " foi modificado pela última vez em: <b>" . date("F d Y H:i:s.", $buff) . "</b>.");
+            array_push($this->result, basename($this->file) . " was last modified on: <b>" . date("F d Y H:i:s.", $buff) . "</b>.");
         } else {
-            array_push($this->result, "Não foi possível verificar a ultima data de modificação.");
+            array_push($this->result, "Could not check last modified date.");
         }
     }
     
